@@ -17,6 +17,9 @@ and open the template in the editor.
         <div><h1>Facturación</h1></div>
         <hr></hr>
         <h:form>
+            <p:growl id="messages" severity="info,fatal" showSummary="true" showDetail="true" >
+                <p:autoUpdate/>
+            </p:growl>
             <h:panelGrid id="facturaGrid" columns="3">
                 <p:outputLabel for="textIdFactura" value="Número de Factura" />
                 <p:inputText id="textIdFactura" value="" readonly="true" />
@@ -37,7 +40,7 @@ and open the template in the editor.
 
                     <p:outputLabel for="textCantidad" value="Cantidad." />
                     <p:inputText id="textCantidad" type="number" value="" />
-                    
+
                     <p:column />
                     <p:commandButton id="btoAdd" value="Agregar" />
                 </h:panelGrid>
@@ -76,6 +79,8 @@ and open the template in the editor.
                 <p:outputLabel for="textTotal" value="Total" />
                 <p:inputText id="textTotal" type="number" value="" readonly="true" />
             </h:panelGrid>
+            <hr></hr>
+            <p:commandButton id="btoFacturar" value="Facturar" />
         </h:form>
     </h:body>
 </html>
