@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+    <h:head>
+        <title>Facturación</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    </h:head>
+    <h:body>
+        <div><h1>Facturación</h1></div>
+        <hr></hr>
+        <h:form>
+            <h:panelGrid id="facturaGrid" columns="3">
+                <p:outputLabel for="textIdFactura" value="Número de Factura" />
+                <p:inputText id="textIdFactura" value="" readonly="true" />
+                <p:message for="textIdFactura" />
+
+                <p:outputLabel for="textNombreCliente" value="Nombre de Cliente" />
+                <p:inputText id="textNombreCliente" value="" required="true" requiredMessage="Campo requerido!" />
+                <p:message for="textNombreCliente" />
+            </h:panelGrid>
+            <hr></hr>
+            <p:fieldset legend="Buscar Producto" >
+                <h:panelGrid id="productoGrid" columns="8">
+                    <p:outputLabel for="textIdProducto" value="Número Producto." />
+                    <p:inputText id="textIdProducto" type="number" value="" onkeypress="" />                
+
+                    <p:outputLabel for="textPrecioUnidad" value="P. Ud." />
+                    <p:inputText id="textPrecioUnidad" type="number" value="" readonly="true" />
+
+                    <p:outputLabel for="textCantidad" value="Cantidad." />
+                    <p:inputText id="textCantidad" type="number" value="" />
+                    
+                    <p:column />
+                    <p:commandButton id="btoAdd" value="Agregar" />
+                </h:panelGrid>
+            </p:fieldset>
+
+            <p:dataTable id="dataProducto" value="" var="producto"
+                         rows="10"
+                         paginator="true"
+                         paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                         currentPageReportTemplate="{startRecord}-{endRecord} of {totalRecords} records"
+                         rowsPerPageTemplate="5,10,15">
+
+                <p:column headerText="Identificador" filterBy="">
+                    <h:outputText value="" />
+                </p:column>
+                <p:column headerText="Nombre" filterBy="">
+                    <h:outputText value="" />
+                </p:column>
+                <p:column headerText="Precio Unitario" filterBy="">
+                    <h:outputText value="" />
+                </p:column>
+                <p:column headerText="Cantidad" filterBy="">
+                    <h:outputText value="" />
+                </p:column>
+                <p:column headerText="Total" filterBy="">
+                    <h:outputText value="" />
+                </p:column>
+            </p:dataTable>
+            <h:panelGrid id="totalGrid" columns="2">
+                <p:outputLabel for="textSubTotal" value="Sub Total" />
+                <p:inputText id="textSubTotal" type="number" value="" readonly="true" />                
+
+                <p:outputLabel for="textImpuesto" value="Impuesto" />
+                <p:inputText id="textImpuesto" type="number" value="" readonly="true" />
+
+                <p:outputLabel for="textTotal" value="Total" />
+                <p:inputText id="textTotal" type="number" value="" readonly="true" />
+            </h:panelGrid>
+        </h:form>
+    </h:body>
+</html>

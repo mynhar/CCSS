@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <h:head>
+        <title>Editar Producto!</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    </h:head>
+    <h:body>
+        <div><h1>Editar Producto!</h1></div>
+        <h:form>
+            <p:growl id="messages" severity="info,fatal" showSummary="true" showDetail="true" >
+                <p:autoUpdate/>
+            </p:growl>
+            
+            <p:fieldset legend="Editar Producto">
+                <h:panelGrid id="productoGrid" columns="3" >
+                                       
+                    <p:outputLabel for="textId" value="Codigo:" />
+                    <p:inputText id="textId" value="#{productoEditController.producto.ID_PRODUCTO}" readonly="true" />
+                    <p:message for="textId" />
+                    
+                    <p:outputLabel for="textNombre" value="Nombre:" />
+                    <p:inputText id="textNombre" value="#{productoEditController.producto.NOM_PRODUCTO}" required="true" requiredMessage="Campo requerido!" />
+                    <p:message for="textNombre" />
+
+                    <p:outputLabel for="textCantidad" value="Cantidad:" />
+                    <p:inputText id="textCantidad" type="number" value="#{productoEditController.producto.CAN_PRODUCTO}" required="true" requiredMessage="Campo requerido!" />
+                    <p:message for="textCantidad" />
+
+                    <p:outputLabel for="textMonto" value="Monto:" />
+                    <p:inputText id="textMonto" type="number" value="#{productoEditController.producto.MON_PRODUCTO}" required="true" requiredMessage="Campo requerido!" />
+                    <p:message for="textMonto" />
+
+                    <p:column />
+                    <p:commandButton value="Registrar" actionListener="#{productoEditController.edit()}" update="productoGrid" />
+                    <p:column />
+                </h:panelGrid>
+            </p:fieldset>
+        </h:form>        
+    </h:body>
+</html>

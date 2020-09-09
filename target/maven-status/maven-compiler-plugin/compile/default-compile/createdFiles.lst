@@ -1,0 +1,7 @@
+com\ccss\controller\resources\ConexionJDBCOracle.class
+com\ccss\controller\resources\ProductoDao.class
+com\ccss\model\Producto.class
+com\ccss\ejb\ProductoSessionBean.class
+com\ccss\controller\ProductoEditController.class
+com\ccss\ejb\ProductoSessionBeanLocal.class
+com\ccss\controller\ProductoController.class

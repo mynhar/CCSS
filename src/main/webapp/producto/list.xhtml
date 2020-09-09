@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+    
+    <h:head>
+        <title>Listar Producto</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    </h:head>
+    <h:body>
+        <div><h1>Listar Productos</h1></div>
+        
+        <h:form>
+            <p:growl id="messages" severity="info,fatal" showSummary="true" showDetail="true" >
+                <p:autoUpdate/>
+            </p:growl>
+            
+            <p:commandButton value="Crear Producto" action="create" />
+            <p:dataTable id="dataProducto" value="#{productoController.listar}" var="producto"
+                          rows="10"
+                          paginator="true"
+                 paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                 currentPageReportTemplate="{startRecord}-{endRecord} of {totalRecords} records"
+                 rowsPerPageTemplate="5,10,15">
+                
+                <p:column headerText="Código" filterBy="#{producto.ID_PRODUCTO}">
+                    <h:outputText value="#{producto.ID_PRODUCTO}" />
+                </p:column>
+                <p:column headerText="Nombre" filterBy="#{producto.NOM_PRODUCTO}">
+                    <h:outputText value="#{producto.NOM_PRODUCTO}" />
+                </p:column>
+                <p:column headerText="Cantidad" filterBy="#{producto.CAN_PRODUCTO}">
+                    <h:outputText value="#{producto.CAN_PRODUCTO}" />
+                </p:column>
+                <p:column headerText="Monto" filterBy="#{producto.MON_PRODUCTO}">
+                    <h:outputText value="#{producto.MON_PRODUCTO}">
+                        <f:convertNumber pattern="#000.000" currencySymbol = "$" type = "currency" />
+                    </h:outputText>
+                </p:column>
+                <p:column headerText="A">
+                    <p:commandLink value="Edit " action="edit" actionListener="#{productoController.asignar(producto)}" />                    
+                </p:column>
+                 <p:column headerText="A">                    
+                    <p:commandLink value="Delete" actionListener="#{productoController.delete(producto)}" update="dataProducto" />
+                </p:column>
+            </p:dataTable>
+        </h:form>
+        
+    </h:body>
+</html>
