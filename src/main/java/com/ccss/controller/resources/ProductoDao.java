@@ -56,8 +56,7 @@ public class ProductoDao extends ConexionJDBCOracle {
         return lista;
     }
 
-    public Producto find(Integer id) {
-        System.out.println("ProductoDao ==> find");
+    public Producto find(Integer id) {        
         Producto obj = null;
         try {
 
@@ -68,11 +67,9 @@ public class ProductoDao extends ConexionJDBCOracle {
             stmt.setInt(1, id);
 
             //step4 execute query            
-            ResultSet rs = stmt.executeQuery(sql);
+            ResultSet rs = stmt.executeQuery();
 
             while (rs.next()) {
-                System.out.println(rs.getInt(1) + "  " + rs.getString(2) + "  " + rs.getInt(3) + "  " + rs.getBigDecimal(4));
-
                 obj = new Producto();
                 obj.setID_PRODUCTO(rs.getInt(1));
                 obj.setNOM_PRODUCTO(rs.getString(2));

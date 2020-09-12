@@ -39,7 +39,7 @@ public class ProductoSessionBean implements ProductoSessionBeanLocal {
     }
 
     @Override
-    public Producto find(Integer id) {
+    public Producto find(Integer id) {        
         ProductoDao dao = new ProductoDao();
         return dao.find(id);
     }

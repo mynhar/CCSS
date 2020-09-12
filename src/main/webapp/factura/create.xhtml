@@ -22,65 +22,74 @@ and open the template in the editor.
             </p:growl>
             <h:panelGrid id="facturaGrid" columns="3">
                 <p:outputLabel for="textIdFactura" value="Número de Factura" />
-                <p:inputText id="textIdFactura" value="" readonly="true" />
+                <p:inputText id="textIdFactura" value="#{facturaController.factura.ID_FACTURA}" readonly="true" />
                 <p:message for="textIdFactura" />
 
                 <p:outputLabel for="textNombreCliente" value="Nombre de Cliente" />
-                <p:inputText id="textNombreCliente" value="" required="true" requiredMessage="Campo requerido!" />
+                <p:inputText id="textNombreCliente" value="#{facturaController.factura.NOM_CLIENTE}" required="true" requiredMessage="Campo requerido!" />
                 <p:message for="textNombreCliente" />
             </h:panelGrid>
             <hr></hr>
             <p:fieldset legend="Buscar Producto" >
                 <h:panelGrid id="productoGrid" columns="8">
                     <p:outputLabel for="textIdProducto" value="Número Producto." />
-                    <p:inputText id="textIdProducto" type="number" value="" onkeypress="" />                
+                    <p:inputText id="textIdProducto" type="number" binding="#{buscarProductoController.textIdProducto}" >
+                        <p:ajax event="blur" listener="#{buscarProductoController.buscarProducto()}" update="textPrecioUnidad,textCantidad" immediate="true" /> 
+                    </p:inputText>
 
                     <p:outputLabel for="textPrecioUnidad" value="P. Ud." />
-                    <p:inputText id="textPrecioUnidad" type="number" value="" readonly="true" />
+                    <p:inputText id="textPrecioUnidad" type="number" binding="#{buscarProductoController.textPrecioUnidad}" readonly="true" />
 
                     <p:outputLabel for="textCantidad" value="Cantidad." />
-                    <p:inputText id="textCantidad" type="number" value="" />
+                    <p:inputText id="textCantidad" type="number" binding="#{buscarProductoController.textCantidad}" >
+                        <p:ajax event="blur" process="@this" immediate="true" listener="#{facturaController.setCantidad()}" />
+                    </p:inputText>
 
                     <p:column />
-                    <p:commandButton id="btoAdd" value="Agregar" />
+                    <p:commandButton id="btoAdd"                                     
+                                     title="Agregar"
+                                     icon="ui-icon-search"
+                                     actionListener="#{facturaController.agregarDetalle()}"
+                                     process="@this textCantidad" immediate="true" update="dataProducto,textSubTotal,textTotal" />
                 </h:panelGrid>
             </p:fieldset>
-
-            <p:dataTable id="dataProducto" value="" var="producto"
+            <p:dataTable id="dataProducto" value="#{facturaController.detalleList}" var="detalleFactura"
                          rows="10"
                          paginator="true"
                          paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
                          currentPageReportTemplate="{startRecord}-{endRecord} of {totalRecords} records"
                          rowsPerPageTemplate="5,10,15">
 
-                <p:column headerText="Identificador" filterBy="">
-                    <h:outputText value="" />
+                <p:column headerText="Identificador" filterBy="#{detalleFactura.ID_DETALLE}">
+                    <h:outputText value="#{detalleFactura.ID_DETALLE}" />
                 </p:column>
-                <p:column headerText="Nombre" filterBy="">
-                    <h:outputText value="" />
+                <p:column headerText="Nombre" filterBy="#{detalleFactura.producto.NOM_PRODUCTO}">
+                    <h:outputText value="#{detalleFactura.producto.NOM_PRODUCTO}" />
                 </p:column>
-                <p:column headerText="Precio Unitario" filterBy="">
-                    <h:outputText value="" />
+                <p:column headerText="Precio Unitario" filterBy="#{detalleFactura.producto.MON_PRODUCTO}">
+                    <h:outputText value="#{detalleFactura.producto.MON_PRODUCTO}" />
                 </p:column>
-                <p:column headerText="Cantidad" filterBy="">
-                    <h:outputText value="" />
+                <p:column headerText="Cantidad" filterBy="#{detalleFactura.CAN_PRODUCTO}">
+                    <h:outputText value="#{detalleFactura.CAN_PRODUCTO}" />
                 </p:column>
-                <p:column headerText="Total" filterBy="">
-                    <h:outputText value="" />
+                <p:column headerText="Total" filterBy="#{detalleFactura.MON_PRODUCTO}">
+                    <h:outputText value="#{detalleFactura.MON_PRODUCTO}" />
                 </p:column>
             </p:dataTable>
             <h:panelGrid id="totalGrid" columns="2">
                 <p:outputLabel for="textSubTotal" value="Sub Total" />
-                <p:inputText id="textSubTotal" type="number" value="" readonly="true" />                
+                <p:inputText id="textSubTotal" type="number" value="#{facturaController.subTotal}" readonly="true" required="true" requiredMessage="Campo requerido!" />
 
                 <p:outputLabel for="textImpuesto" value="Impuesto" />
-                <p:inputText id="textImpuesto" type="number" value="" readonly="true" />
+                <p:inputText id="textImpuesto" type="number" value="#{facturaController.MON_IMPUESTO}" required="true" requiredMessage="Campo requerido!" >
+                    <p:ajax event="blur" listener="#{facturaController.calcularImpuesto()}" update="textTotal" immediate="true" /> 
+                </p:inputText>
 
                 <p:outputLabel for="textTotal" value="Total" />
-                <p:inputText id="textTotal" type="number" value="" readonly="true" />
+                <p:inputText id="textTotal" type="number" value="#{facturaController.MON_TOTAL}" readonly="true" required="true" requiredMessage="Campo requerido!" />
             </h:panelGrid>
             <hr></hr>
-            <p:commandButton id="btoFacturar" value="Facturar" />
+            <p:commandButton id="btoFacturar" value="Facturar" actionListener="#{facturaController.facturar()}" />
         </h:form>
     </h:body>
 </html>

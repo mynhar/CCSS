@@ -1,7 +1,15 @@
 com\ccss\controller\resources\ConexionJDBCOracle.class
-com\ccss\controller\resources\ProductoDao.class
+com\ccss\ejb\DetalleFacturaSessionBean.class
+com\ccss\model\DetalleFactura.class
 com\ccss\model\Producto.class
-com\ccss\ejb\ProductoSessionBean.class
+com\ccss\controller\BuscarProductoController.class
+com\ccss\ejb\DetalleFacturaSessionBeanLocal.class
 com\ccss\controller\ProductoEditController.class
+com\ccss\ejb\FacturaSessionBean.class
 com\ccss\ejb\ProductoSessionBeanLocal.class
+com\ccss\controller\FacturaController.class
+com\ccss\model\Factura.class
+com\ccss\controller\resources\ProductoDao.class
+com\ccss\ejb\ProductoSessionBean.class
+com\ccss\ejb\FacturaSessionBeanLocal.class
 com\ccss\controller\ProductoController.class
