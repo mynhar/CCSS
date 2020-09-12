@@ -1,4 +1,5 @@
 C:\Users\Harold\Documents\NetBeansProjects\CCSS\src\main\java\com\ccss\controller\FacturaController.java
+C:\Users\Harold\Documents\NetBeansProjects\CCSS\src\main\java\com\ccss\controller\resources\FacturaDao.java
 C:\Users\Harold\Documents\NetBeansProjects\CCSS\src\main\java\com\ccss\model\Factura.java
 C:\Users\Harold\Documents\NetBeansProjects\CCSS\src\main\java\com\ccss\controller\resources\ProductoDao.java
 C:\Users\Harold\Documents\NetBeansProjects\CCSS\src\main\java\com\ccss\ejb\DetalleFacturaSessionBean.java
@@ -11,5 +12,6 @@ C:\Users\Harold\Documents\NetBeansProjects\CCSS\src\main\java\com\ccss\model\Det
 C:\Users\Harold\Documents\NetBeansProjects\CCSS\src\main\java\com\ccss\controller\ProductoController.java
 C:\Users\Harold\Documents\NetBeansProjects\CCSS\src\main\java\com\ccss\model\Producto.java
 C:\Users\Harold\Documents\NetBeansProjects\CCSS\src\main\java\com\ccss\controller\ProductoEditController.java
+C:\Users\Harold\Documents\NetBeansProjects\CCSS\src\main\java\com\ccss\controller\resources\DetalleFacturaDao.java
 C:\Users\Harold\Documents\NetBeansProjects\CCSS\src\main\java\com\ccss\ejb\DetalleFacturaSessionBeanLocal.java
 C:\Users\Harold\Documents\NetBeansProjects\CCSS\src\main\java\com\ccss\ejb\FacturaSessionBeanLocal.java

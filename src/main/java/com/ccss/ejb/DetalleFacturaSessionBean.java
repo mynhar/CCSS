@@ -5,6 +5,7 @@
  */
 package com.ccss.ejb;
 
+import com.ccss.controller.resources.DetalleFacturaDao;
 import com.ccss.model.DetalleFactura;
 import java.util.List;
 import javax.ejb.Stateless;
@@ -18,27 +19,37 @@ public class DetalleFacturaSessionBean implements DetalleFacturaSessionBeanLocal
 
     @Override
     public DetalleFactura create(DetalleFactura detalleFactura) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        System.out.println("DetalleFacturaSessionBean.create: " + detalleFactura.toString());
+        DetalleFacturaDao dao = new DetalleFacturaDao();
+        return dao.create(detalleFactura);
     }
 
     @Override
     public DetalleFactura edit(DetalleFactura detalleFactura) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        System.out.println("DetalleFacturaSessionBean.adit: " + detalleFactura.toString());
+        DetalleFacturaDao dao = new DetalleFacturaDao();
+        return dao.edit(detalleFactura);
     }
 
     @Override
     public Integer delete(Integer id) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        System.out.println("DetalleFacturaSessionBean.delete: " + id);
+        DetalleFacturaDao dao = new DetalleFacturaDao();
+        return dao.delete(id);
     }
 
     @Override
     public DetalleFactura find(Integer id) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        System.out.println("DetalleFacturaSessionBean.find: " + id);
+        DetalleFacturaDao dao = new DetalleFacturaDao();
+        return dao.find(id);
     }
 
     @Override
     public List<DetalleFactura> findAll() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        System.out.println("DetalleFacturaSessionBean.findAll: ");
+        DetalleFacturaDao dao = new DetalleFacturaDao();
+        return dao.findAll();
     }
 
     // Add business logic below. (Right-click in editor and choose

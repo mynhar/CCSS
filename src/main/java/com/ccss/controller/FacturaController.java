@@ -13,6 +13,7 @@ import java.io.Serializable;
 import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
@@ -64,23 +65,6 @@ public class FacturaController implements Serializable {
 
     public void setSubTotal(BigDecimal subTotal) {
         this.subTotal = subTotal;
-    }
-
-    /**
-     *
-     */
-    public void facturar() {
-        try {
-
-            facturaSessionBeanLocal.create(factura);
-            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Aviso!", "Correcto!"));
-
-        } catch (Exception e) {
-            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_FATAL, "Error!", "InCorrecto!"));
-            System.out.println("com.ccss.controller.FacturaController.create() " + e.getMessage());
-        } finally {
-            FacesContext.getCurrentInstance().getExternalContext().getFlash().setKeepMessages(true);
-        }
     }
 
     public void agregarDetalle() {
@@ -179,5 +163,29 @@ public class FacturaController implements Serializable {
     public void setCantidad() {
         this.CAN_PRODUCTO = buscarProductoController.getCantidad();
         System.out.println("CAN_PRODUCTO ===> : " + this.CAN_PRODUCTO);
+    }
+    
+     /**
+     *
+     */
+    public void facturar() {
+        
+        Date objDate = new Date(); 
+        
+        try {
+            this.factura.setFEC_FACTURA(objDate);
+            this.factura.setMON_IMPUESTO(this.getMON_IMPUESTO());
+            this.factura.setMON_TOTAL(this.getMON_TOTAL());
+            this.factura.setDetalleList(this.getDetalleList());
+            
+            facturaSessionBeanLocal.create(factura);
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Aviso!", "Correcto!"));
+
+        } catch (Exception e) {
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_FATAL, "Error!", "InCorrecto!"));
+            System.out.println("com.ccss.controller.FacturaController.create() " + e.getMessage());
+        } finally {
+            FacesContext.getCurrentInstance().getExternalContext().getFlash().setKeepMessages(true);
+        }
     }
 }

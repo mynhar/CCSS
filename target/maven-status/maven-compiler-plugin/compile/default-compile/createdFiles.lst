@@ -11,5 +11,7 @@ com\ccss\controller\FacturaController.class
 com\ccss\model\Factura.class
 com\ccss\controller\resources\ProductoDao.class
 com\ccss\ejb\ProductoSessionBean.class
+com\ccss\controller\resources\DetalleFacturaDao.class
 com\ccss\ejb\FacturaSessionBeanLocal.class
 com\ccss\controller\ProductoController.class
+com\ccss\controller\resources\FacturaDao.class

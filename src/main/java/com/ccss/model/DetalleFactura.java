@@ -16,6 +16,7 @@ public class DetalleFactura implements Serializable{
     
     private Integer ID_DETALLE;
     private Integer ID_FACTURA;
+    private Integer ID_PRODUCTO;
     private Producto producto;
     private Integer CAN_PRODUCTO;
     private BigDecimal MON_PRODUCTO = BigDecimal.ZERO;;
@@ -59,6 +60,16 @@ public class DetalleFactura implements Serializable{
     public void setMON_PRODUCTO(BigDecimal MON_PRODUCTO) {
         this.MON_PRODUCTO = MON_PRODUCTO;
     }
+
+    public Integer getID_PRODUCTO() {
+        return ID_PRODUCTO;
+    }
+
+    public void setID_PRODUCTO(Integer ID_PRODUCTO) {
+        this.ID_PRODUCTO = ID_PRODUCTO;
+    }
+    
+    
 
     @Override
     public String toString() {
