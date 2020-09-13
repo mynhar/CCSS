@@ -7,7 +7,6 @@ package com.ccss.controller.resources;
 
 import com.ccss.model.Factura;
 import java.sql.CallableStatement;
-import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -130,10 +129,12 @@ public class FacturaDao extends ConexionJDBCOracle {
     public Factura create(Factura factura) {
         try {
 
+            java.sql.Date FEC_FACTURA = new java.sql.Date(factura.getFEC_FACTURA().getTime());
+            
             CallableStatement cs = null;
             cs = this.con.prepareCall("{call Harold.insertFactura(?,?,?,?,?)}");
             cs.setString(1, factura.getNOM_CLIENTE());
-            cs.setDate(2, (Date) factura.getFEC_FACTURA());
+            cs.setDate(2, FEC_FACTURA);
             cs.setBigDecimal(3, factura.getMON_IMPUESTO());
             cs.setBigDecimal(4, factura.getMON_TOTAL());
             cs.registerOutParameter(5, Types.INTEGER);
@@ -159,11 +160,12 @@ public class FacturaDao extends ConexionJDBCOracle {
      */
     public Factura edit(Factura factura) {
         try {
+            java.sql.Date FEC_FACTURA = new java.sql.Date(factura.getFEC_FACTURA().getTime());
 
             CallableStatement cs = null;
             cs = this.con.prepareCall("{call Harold.updateFactura(?,?,?,?,?)}");
             cs.setString(1, factura.getNOM_CLIENTE());
-            cs.setDate(2, (Date) factura.getFEC_FACTURA());
+            cs.setDate(2, FEC_FACTURA);
             cs.setBigDecimal(3, factura.getMON_IMPUESTO());
             cs.setBigDecimal(4, factura.getMON_TOTAL());
             cs.setInt(5, factura.getID_FACTURA());

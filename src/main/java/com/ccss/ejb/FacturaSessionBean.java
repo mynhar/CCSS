@@ -23,30 +23,32 @@ public class FacturaSessionBean implements FacturaSessionBeanLocal {
     DetalleFacturaSessionBeanLocal detalleFacturaSessionBeanLocal;
 
     @Override
-    public Factura create(Factura factura) {
+    public Factura create(Factura factura) {        
         System.out.println("FacturaSessionBean.create:" + factura.toString());
+        
         FacturaDao dao = new FacturaDao();
-
         Factura obj = dao.create(factura);
+        
         if (obj != null) {
             Integer idFactura = obj.getID_FACTURA();
             if (idFactura != null) {
-                List<DetalleFactura> lista = obj.getDetalleList();
+                List<DetalleFactura> lista = factura.getDetalleList();
                 if (lista != null && !lista.isEmpty()) {
                     for (int i = 0; i < lista.size(); i++) {
                         lista.get(i).setID_FACTURA(idFactura);
                         DetalleFactura resultDF = detalleFacturaSessionBeanLocal.create(lista.get(i));
-                        Integer idDetalle = resultDF.getID_DETALLE();
-                        if (idDetalle != null) {
-                            lista.get(i).setID_DETALLE(idDetalle);
+                        if (resultDF != null) {
+                            Integer idDetalle = resultDF.getID_DETALLE();
+                            if (idDetalle != null) {
+                                lista.get(i).setID_DETALLE(idDetalle);
+                            }
                         }
                     }
-                    factura.setDetalleList(lista);
+                    obj.setDetalleList(lista);
                 }
             }
         }
-
-        return factura;
+        return obj;
     }
 
     @Override

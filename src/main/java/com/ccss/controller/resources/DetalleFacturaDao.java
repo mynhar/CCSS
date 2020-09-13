@@ -103,10 +103,11 @@ public class DetalleFacturaDao extends ConexionJDBCOracle{
      * @return 
      */
     public Integer delete(Integer id_DetalleFactura) {
+        String query = "{call Harold.deleteDetalleFactura(?)}";
         try {
 
             CallableStatement cs = null;
-            cs = this.con.prepareCall("{call Harold.deleteDetalleFactura(?)}");
+            cs = this.con.prepareCall(query);
             cs.setInt(1, id_DetalleFactura);
 
             cs.executeQuery();
@@ -127,10 +128,12 @@ public class DetalleFacturaDao extends ConexionJDBCOracle{
      * @return 
      */
     public DetalleFactura create(DetalleFactura detalle) {
+        String query = "{call Harold.insertDetalleFactura(?,?,?,?,?)}";
+        
         try {
 
             CallableStatement cs = null;
-            cs = this.con.prepareCall("{call Harold.insertDetalleFactura(?,?,?,?,?)}");
+            cs = this.con.prepareCall(query);
             cs.setInt(1, detalle.getID_FACTURA());
             cs.setInt(2, detalle.getProducto().getID_PRODUCTO());
             cs.setInt(3, detalle.getCAN_PRODUCTO());
@@ -140,7 +143,8 @@ public class DetalleFacturaDao extends ConexionJDBCOracle{
 
             Integer id = cs.getInt(5);
             detalle.setID_DETALLE(id);
-
+            System.out.println("ID_DETALLE: "+id);
+            
             //step5 close the connection object  
             con.close();
 

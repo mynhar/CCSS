@@ -17,6 +17,7 @@ import java.util.Date;
 import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
+import javax.enterprise.context.RequestScoped;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 import javax.faces.view.ViewScoped;
@@ -38,6 +39,7 @@ public class FacturaController implements Serializable {
     private BuscarProductoController buscarProductoController;
 
     private Factura factura;
+    private Integer ID_FACTURA;
     private BigDecimal subTotal = BigDecimal.ZERO;
     private BigDecimal MON_IMPUESTO = BigDecimal.ZERO;
     private BigDecimal MON_TOTAL = BigDecimal.ZERO;
@@ -178,7 +180,19 @@ public class FacturaController implements Serializable {
             this.factura.setMON_TOTAL(this.getMON_TOTAL());
             this.factura.setDetalleList(this.getDetalleList());
             
-            facturaSessionBeanLocal.create(factura);
+            Factura result = facturaSessionBeanLocal.create(factura);
+            if(result != null){
+                this.setFactura(result);
+                this.setID_FACTURA(result.getID_FACTURA());
+                this.setMON_IMPUESTO(result.getMON_IMPUESTO());
+                this.setMON_TOTAL(result.getMON_TOTAL());
+                
+                List<DetalleFactura> resultDetalle = result.getDetalleList();
+                if(resultDetalle != null && !resultDetalle.isEmpty()){
+                    this.setDetalleList(resultDetalle);
+                }                
+            }
+            
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Aviso!", "Correcto!"));
 
         } catch (Exception e) {
@@ -188,4 +202,14 @@ public class FacturaController implements Serializable {
             FacesContext.getCurrentInstance().getExternalContext().getFlash().setKeepMessages(true);
         }
     }
+
+    public Integer getID_FACTURA() {
+        return ID_FACTURA;
+    }
+
+    public void setID_FACTURA(Integer ID_FACTURA) {
+        this.ID_FACTURA = ID_FACTURA;
+    }
+    
+    
 }
