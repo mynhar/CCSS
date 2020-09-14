@@ -5,7 +5,7 @@
  */
 package com.ccss.ejb;
 
-import com.ccss.controller.resources.DetalleFacturaDao;
+import com.ccss.dao.DetalleFacturaDao;
 import com.ccss.model.DetalleFactura;
 import java.util.List;
 import javax.ejb.Stateless;

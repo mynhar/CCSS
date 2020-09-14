@@ -3,9 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.ccss.controller.resources;
+package com.ccss.dao;
 
-import com.ccss.model.Factura;
+import com.ccss.model.DetalleFactura;
 import java.sql.CallableStatement;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -19,9 +19,9 @@ import java.util.List;
  *
  * @author Harold
  */
-public class FacturaDao extends ConexionJDBCOracle {
-
-    public FacturaDao() {
+public class DetalleFacturaDao extends ConexionJDBCOracle{
+    
+     public DetalleFacturaDao() {
         super();
     }
 
@@ -29,9 +29,9 @@ public class FacturaDao extends ConexionJDBCOracle {
      * 
      * @return 
      */
-    public List<Factura> findAll() {
+    public List<DetalleFactura> findAll() {
 
-        List<Factura> lista = new ArrayList<Factura>();
+        List<DetalleFactura> lista = new ArrayList<DetalleFactura>();
 
         try {
 
@@ -39,16 +39,16 @@ public class FacturaDao extends ConexionJDBCOracle {
             Statement stmt = con.createStatement();
 
             //step4 execute query
-            String sql = "SELECT * FROM HAROLD.TBL_FACTURA order by ID_FACTURA desc";
+            String sql = "SELECT * FROM HAROLD.TBL_DETALLE_FACTURA order by ID_DETALLE desc";
             ResultSet rs = stmt.executeQuery(sql);
 
             while (rs.next()) {
-                Factura obj = new Factura();
-                obj.setID_FACTURA(rs.getInt(1));
-                obj.setNOM_CLIENTE(rs.getString(2));
-                obj.setFEC_FACTURA(rs.getDate(3));
-                obj.setMON_IMPUESTO(rs.getBigDecimal(4));
-                obj.setMON_TOTAL(rs.getBigDecimal(5));
+                DetalleFactura obj = new DetalleFactura();
+                obj.setID_DETALLE(rs.getInt(1));
+                obj.setID_FACTURA(rs.getInt(2));
+                obj.setID_PRODUCTO(rs.getInt(3));
+                obj.setCAN_PRODUCTO(rs.getInt(4));
+                obj.setMON_PRODUCTO(rs.getBigDecimal(5));
                 lista.add(obj);
             }
 
@@ -66,11 +66,11 @@ public class FacturaDao extends ConexionJDBCOracle {
      * @param id
      * @return 
      */
-    public Factura find(Integer id) {
-        Factura obj = null;
+    public DetalleFactura find(Integer id) {
+        DetalleFactura obj = null;
         try {
 
-            String sql = "SELECT factura.* FROM HAROLD.TBL_FACTURA factura WHERE factura.ID_FACTURA = ?";
+            String sql = "SELECT detalle.* FROM HAROLD.TBL_DETALLE_FACTURA detalle WHERE detalle.ID_DETALLE = ?";
 
             //step3 create the statement object  
             PreparedStatement stmt = con.prepareStatement(sql);
@@ -80,12 +80,12 @@ public class FacturaDao extends ConexionJDBCOracle {
             ResultSet rs = stmt.executeQuery();
 
             while (rs.next()) {
-                obj = new Factura();
-                obj.setID_FACTURA(rs.getInt(1));
-                obj.setNOM_CLIENTE(rs.getString(2));
-                obj.setFEC_FACTURA(rs.getDate(3));
-                obj.setMON_IMPUESTO(rs.getBigDecimal(4));
-                obj.setMON_TOTAL(rs.getBigDecimal(5));
+                obj = new DetalleFactura();
+                obj.setID_DETALLE(rs.getInt(1));
+                obj.setID_FACTURA(rs.getInt(2));
+                obj.setID_PRODUCTO(rs.getInt(3));
+                obj.setCAN_PRODUCTO(rs.getInt(4));
+                obj.setMON_PRODUCTO(rs.getBigDecimal(5));
             }
 
             //step5 close the connection object  
@@ -99,15 +99,16 @@ public class FacturaDao extends ConexionJDBCOracle {
 
     /**
      * 
-     * @param id_factura
+     * @param id_DetalleFactura
      * @return 
      */
-    public Integer delete(Integer id_factura) {
+    public Integer delete(Integer id_DetalleFactura) {
+        String query = "{call Harold.deleteDetalleFactura(?)}";
         try {
 
             CallableStatement cs = null;
-            cs = this.con.prepareCall("{call Harold.deleteFactura(?)}");
-            cs.setInt(1, id_factura);
+            cs = this.con.prepareCall(query);
+            cs.setInt(1, id_DetalleFactura);
 
             cs.executeQuery();
 
@@ -122,27 +123,28 @@ public class FacturaDao extends ConexionJDBCOracle {
     }
 
     /**
-     *
-     * @param factura
-     * @return
+     * 
+     * @param detalle
+     * @return 
      */
-    public Factura create(Factura factura) {
+    public DetalleFactura create(DetalleFactura detalle) {
+        String query = "{call Harold.insertDetalleFactura(?,?,?,?,?)}";
+        
         try {
 
-            java.sql.Date FEC_FACTURA = new java.sql.Date(factura.getFEC_FACTURA().getTime());
-            
             CallableStatement cs = null;
-            cs = this.con.prepareCall("{call Harold.insertFactura(?,?,?,?,?)}");
-            cs.setString(1, factura.getNOM_CLIENTE());
-            cs.setDate(2, FEC_FACTURA);
-            cs.setBigDecimal(3, factura.getMON_IMPUESTO());
-            cs.setBigDecimal(4, factura.getMON_TOTAL());
+            cs = this.con.prepareCall(query);
+            cs.setInt(1, detalle.getID_FACTURA());
+            cs.setInt(2, detalle.getProducto().getID_PRODUCTO());
+            cs.setInt(3, detalle.getCAN_PRODUCTO());
+            cs.setBigDecimal(4, detalle.getMON_PRODUCTO());
             cs.registerOutParameter(5, Types.INTEGER);
             cs.executeQuery();
 
             Integer id = cs.getInt(5);
-            factura.setID_FACTURA(id);
-
+            detalle.setID_DETALLE(id);
+            System.out.println("ID_DETALLE: "+id);
+            
             //step5 close the connection object  
             con.close();
 
@@ -150,7 +152,7 @@ public class FacturaDao extends ConexionJDBCOracle {
             System.out.println(e.getMessage());
         }
 
-        return factura;
+        return detalle;
     }
 
     /**
@@ -158,17 +160,16 @@ public class FacturaDao extends ConexionJDBCOracle {
      * @param factura
      * @return 
      */
-    public Factura edit(Factura factura) {
+    public DetalleFactura edit(DetalleFactura detalle) {
         try {
-            java.sql.Date FEC_FACTURA = new java.sql.Date(factura.getFEC_FACTURA().getTime());
 
             CallableStatement cs = null;
-            cs = this.con.prepareCall("{call Harold.updateFactura(?,?,?,?,?)}");
-            cs.setString(1, factura.getNOM_CLIENTE());
-            cs.setDate(2, FEC_FACTURA);
-            cs.setBigDecimal(3, factura.getMON_IMPUESTO());
-            cs.setBigDecimal(4, factura.getMON_TOTAL());
-            cs.setInt(5, factura.getID_FACTURA());
+            cs = this.con.prepareCall("{call Harold.updateDetalleFactura(?,?,?,?,?)}");
+            cs.setInt(1, detalle.getID_FACTURA());
+            cs.setInt(2, detalle.getProducto().getID_PRODUCTO());
+            cs.setInt(3, detalle.getCAN_PRODUCTO());
+            cs.setBigDecimal(4, detalle.getMON_PRODUCTO());
+            cs.setInt(5, detalle.getID_DETALLE());
             cs.executeQuery();
 
             //step5 close the connection object  
@@ -178,7 +179,8 @@ public class FacturaDao extends ConexionJDBCOracle {
             System.out.println(e.getMessage());
         }
 
-        return factura;
+        return detalle;
 
     }
+    
 }

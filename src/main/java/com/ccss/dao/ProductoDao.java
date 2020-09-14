@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.ccss.controller.resources;
+package com.ccss.dao;
 
 import com.ccss.model.Producto;
 import java.sql.CallableStatement;

@@ -5,7 +5,7 @@
  */
 package com.ccss.ejb;
 
-import com.ccss.controller.resources.ProductoDao;
+import com.ccss.dao.ProductoDao;
 import com.ccss.model.Producto;
 import java.util.List;
 import javax.ejb.Stateless;
